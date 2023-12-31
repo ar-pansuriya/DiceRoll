@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Dice Roller</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .scene {
+            perspective: 1000px;
+            margin-bottom: 6rem;
+            transform: scale(1.5);
+
+        }
+
+        .dice {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            transform-style: preserve-3d;
+            transform-origin: center center;
+        }
+
+        .face {
+            position: absolute;
+            font-size: 6rem;
+            text-align: center;
+            width: 100px;
+            height: 100px;
+            background-color: rgb(255, 255, 255);
+            border: 2px solid black;
+        }
+
+        .front {
+            transform: rotateY(0deg) translateZ(50px);
+        }
+
+        .back {
+            transform: rotateY(180deg) translateZ(50px);
+        }
+
+        .left {
+            transform: rotateY(-90deg) translateZ(50px);
+        }
+
+        .right {
+            transform: rotateY(90deg) translateZ(50px);
+        }
+
+        .top {
+            transform: rotateX(90deg) translateZ(50px);
+        }
+
+        .bottom {
+            transform: rotateX(-90deg) translateZ(50px);
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        @keyframes roll {
+            0% {
+                transform: rotateX(0deg) rotateY(0deg) translateZ(0);
+            }
+
+            25% {
+                transform: rotateX(360deg) rotateY(0deg) translateZ(50);
+            }
+
+            50% {
+                transform: rotateX(360deg) rotateY(180deg) translateZ(0);
+            }
+
+            75% {
+                transform: rotateX(360deg) rotateY(360deg) translateZ(-50);
+            }
+
+            100% {
+                transform: rotateX(0deg) rotateY(360deg) translateZ(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="scene">
+        <div class="dice" id="dice">
+            <div class="face front">1</div>
+            <div class="face back">2</div>
+            <div class="face left">3</div>
+            <div class="face right">4</div>
+            <div class="face top">5</div>
+            <div class="face bottom">6</div>
+        </div>
+    </div>
+
+    <button onclick="rollDice()">Roll Dice</button>
+
+    <script>
+        function rollDice() {
+            let dice = document.querySelector(".dice");
+
+            dice.style.animation = "roll 2s ease-in-out";
+
+            // Reset transforms after the animation completes
+            setTimeout(() => {
+                dice.style.animation = "";
+            }, 900);
+
+            let randomNumber = Math.floor(Math.random() * 6) + 1;
+            console.log(randomNumber);
+
+            switch (randomNumber) {
+                case 1:
+                    dice.style.transform = `rotateX(0deg) rotateY(0deg)`;
+                    break;
+                case 2:
+                    dice.style.transform = `rotateX(0deg) rotateY(180deg)`;
+                    break;
+                case 3:
+                    dice.style.transform = `rotateX(0deg) rotateY(90deg)`;
+                    break;
+                case 4:
+                    dice.style.transform = `rotateX(0deg) rotateY(-90deg)`;
+                    break;
+                case 5:
+                    dice.style.transform = `rotateX(-90deg) rotateY(0deg)`;
+                    break;
+                case 6:
+                    dice.style.transform = `rotateX(90deg) rotateY(0deg)`;
+                    break;
+            }
+        }
+    </script>
+</body>
+
+</html>
